@@ -1,0 +1,157 @@
+.table {
+    box-shadow: 0px 0px 2px 2px #00ced1;
+    border-radius: 15px;
+    position: absolute;
+    margin-top:  -76vh!important;
+    right: 1em;
+    max-width: 100%;
+    height: 89%;
+    border-radius: 15px;
+    width: 30%;
+    overflow-y: auto; 
+  }
+  
+  .nav-menu-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style-type: none;
+    margin: 0;
+    height: 50px;
+    border-radius: 20px;
+  }
+  .cen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 13px;
+  }
+  .cen a{
+    color: #00ced1!important;
+  }
+  .won {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-menu-main a {
+    margin-top: 0.5em;
+    padding: 0 1.5em;
+  }
+  .back {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .user {
+    padding: 0 3em;
+  }
+  
+  .totals {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .betss {
+    margin-right: auto;
+    margin-left: 10px;
+  }
+  
+  .prev {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 10px;
+    width: 120px;
+    height: 25px;
+    border-radius: 20px;
+    border: 1px solid #fff;
+  }
+  .clock {
+    margin-left: 5px;
+    color: gray;
+  }
+  .hand {
+    font-size: 11.5px;
+    color: gray !important;
+  }
+  .tab {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+  }
+  .count {
+    color: #00ced1;
+  }
+  
+  .tab td {
+    padding: 8px 5px;
+    text-align: center;
+    border-bottom: 1px solid #000;
+  }
+  
+  .tab th {
+    color: #333;
+    border-bottom: 1px solid gray;
+    padding: 5px;
+  }
+  .tab tr {
+    color: white !important;
+  }
+  
+  .tab tr:hover {
+    background-color: #181818;
+  }
+  
+  @media screen and (max-width:1420px) {
+    .table{
+      width: 28%;
+      font-size: 11px;
+      height: 74%;
+    }
+  }
+  @media screen and (max-width:900px) {
+    .table{
+      font-size: 9px;
+    }
+  }
+  @media screen and (max-width: 500px) {
+  .table{
+    visibility: visible;
+   top: 85%!important;
+   width: 90%;
+   margin: 0 auto;
+   left: 0;
+   right: 0;
+   font-size: 12px;
+  }}
+  @media screen and (max-width: 390px) {
+    .table{
+      top: 85%!important;
+      font-size: 10px;
+    }
+  }
+  @media (min-width:1600px) and (max-width:1920px) {
+    .table{
+      width: 30%;
+      height: 63%;
+      max-width: 100%;
+    }
+  }
+  @media (min-width:1600px) and (max-width:1880px) {
+  .table{
+    width: 28%;
+    max-width: 90%;
+  }
+  }
+  
+  
+  
+  
+  
