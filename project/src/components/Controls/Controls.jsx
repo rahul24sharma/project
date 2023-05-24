@@ -264,9 +264,6 @@ const Controls = (props) => {
   };
 
 
-
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { username, amount, amount2, cash, cash2 };
