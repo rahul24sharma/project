@@ -1,0 +1,49 @@
+.poster {
+    display: block;
+    width: 1300px;
+    height: 500px;
+    max-width: 100%;
+    margin: 5em auto;
+    left: 0;
+    right: 0;
+    border-radius: 10px;
+  }
+  .inf {
+    width: 1300px;
+    max-width: 100%;
+    display: block;
+    margin: 2em auto;
+    left: 0;
+    right: 0;
+  }
+  h3 {
+    color: aqua;
+  }
+  .aviator {
+    width: 1000px;
+    height: 600px;
+    display: block;
+    max-width: 100%;
+  
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+  }
+  .det{
+    color: white;
+  }
+  @media screen and (max-width: 1200px) {
+    .poster,
+    .inf,
+    .aviator {
+      max-width: 90%;
+    }
+  }
+  @media (min-width: 1650px) and (max-width: 1920px) {
+    .poster {
+      width: 1700px;
+    }
+    .inf {
+      width: 1700px;
+    }
+  }

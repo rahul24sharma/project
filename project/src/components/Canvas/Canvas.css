@@ -1,0 +1,33 @@
+canvas {
+    display: block;
+    margin: 5em 1em;
+    z-index: 1;
+    border-radius: 15px;
+    max-width: 100%;
+    width: 900px;
+  }
+  @media screen and (max-width:1420px) {
+    canvas{
+      max-width: 65%;
+    }
+  }
+  @media screen and (max-width: 500px) {
+    canvas{
+      max-width: 90%;
+      margin: 5em auto;
+      border-radius: 5px;
+    }
+  }
+  @media (min-width:1600px) and (max-width:1920px) {
+    canvas{
+      max-width: 100%;
+      width: 1250px;
+    }
+  }
+  @media (min-width:1600px) and (max-width:1880px) {
+    canvas{
+      max-width: 90%;
+    }
+  }
+  
+  

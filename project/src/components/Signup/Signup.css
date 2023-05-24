@@ -1,0 +1,9 @@
+.err{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.err b{
+    color: red!important;
+    font-weight: 500;
+}
