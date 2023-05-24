@@ -179,22 +179,36 @@ const Controls = (props) => {
     return cleanup;
   }, []);
 
+  // const handleClick = () => {
+  //   if ((count <= 1 && flipped) || (count > 1 && !flipped) || (count >= randomNumber && flipped)) {
+  //     return;
+  //   }
+
+  //   setFlipped(!flipped);
+
+  //   if (!flipped) {
+  //     toast(`Bet successful! ${amount}$`);
+  //   } else {
+  //     toast("Cashout successful!");
+  //   }
+  // };
   const handleClick = () => {
-    if ((count <= 1 && flipped) || (count > 1 && !flipped ) || (count >= randomNumber && flipped)) {
+    if ((count <= 1 && flipped) || (count > 1 && !flipped) || (count >= randomNumber && flipped)) {
       return;
     }
-
-    setFlipped(!flipped);
-
+  
     if (!flipped) {
+      setFlipped(true);
       toast(`Bet successful! ${amount}$`);
     } else {
+      setFlipped(false);
       toast("Cashout successful!");
     }
   };
+  
 
   const clicked = () => {
-    if ((count2 <= 1 && fliped) || (count2 > 1 && !fliped)) {
+    if ((count2 <= 1 && fliped) || (count2 > 1 && !fliped) ||  (count2 >= randomNumber && fliped)) {
       return;
     }
     setFliped(!fliped);
@@ -251,58 +265,7 @@ const Controls = (props) => {
 
 
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  
-  //   const postData = {
-  //     username,
-  //     amount,
-  //     cash,
-  //     // randomNumber
-  //   };
-  
-  //   console.log(postData);
-  
-  //   try {
-  //     const postsRef = collection(db, "posts");
-    
-  //     // Check if postData.id is defined and valid
-  //     if (postData.id) {
-  //       const q = query(postsRef, where("id", "==", postData.id));
-  //       const querySnapshot = await getDocs(q);
-    
-  //       if (querySnapshot.docs.length > 0) {
-  //         const existingData = querySnapshot.docs[0];
-  //         await updateDoc(existingData.ref, {
-  //           cash,
-  //         });
-  //         console.log("Data updated successfully");
-  //       } else {
-  //         await addDoc(postsRef, {
-  //           ...postData,
-  //           timestamp: serverTimestamp(),
-  //         });
-  //         console.log("Data saved successfully");
-  //       }
-  //     } else {
-  //       await addDoc(postsRef, {
-  //         ...postData,
-  //         timestamp: serverTimestamp(),
-  //       });
-  //       console.log("Data saved successfully");
-  //     }
-    
-  //     // Update the state locally with the new data
-  //     if (!dataUpdated) {
-  //       setData([...data, { ...postData, timestamp: serverTimestamp() }]);
-  //       setDataUpdated(true);
-  //     }
-  //   } catch (err) {
-  //     console.log(err.message);
-  //   }
-    
-  // }
-  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
