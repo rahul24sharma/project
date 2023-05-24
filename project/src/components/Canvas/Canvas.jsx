@@ -5,7 +5,7 @@ import "@pixi/gif";
 import { Assets } from "pixi.js";
 import { gsap } from "gsap";
 import gifImage from "../gifImage.gif";
-import "./Canvas.css";
+import "./Canvas.css"
 
 const socket = io.connect("http://localhost:3005");
 
@@ -15,7 +15,7 @@ function App() {
 
   useEffect(() => {
     const app = new PIXI.Application({
-      width: 800,
+      width: 900,
       height: 400,
       backgroundColor: 0x0e0e0e,
     });
@@ -25,17 +25,17 @@ function App() {
     canvasRef.current.appendChild(app.view);
     const xline = new PIXI.Graphics();
     app.stage.addChild(xline);
-    xline.lineStyle(1, 0xffffff).moveTo(850, 370).lineTo(24, 370);
-    xline.visible = false;
+    xline.lineStyle(1, 0xffffff).moveTo(900, 370).lineTo(24, 370);
+    // xline.visible = false;
 
     const yline = new PIXI.Graphics();
     app.stage.addChild(yline);
     yline.lineStyle(1, 0xffffff).moveTo(25, 370).lineTo(25, 0);
-    yline.visible = false;
+    // yline.visible = false;
 
     const fun = new PIXI.Graphics();
     fun.beginFill(0xffa500);
-    fun.drawRoundedRect(0, 0, 850, 30, 0);
+    fun.drawRoundedRect(0, 0, 900, 30, 0);
     fun.endFill();
     const mode = new PIXI.Text("FUN MODE", {
       fill: 0xffffff,
@@ -84,7 +84,6 @@ function App() {
     loaderContainer.addChild(loader);
     // loader.position.set(app.screen.width / 2, app.screen.height / 3.2);
 
-
     let direction = 1;
     const speed = 2;
 
@@ -124,7 +123,6 @@ function App() {
         ui.drawCircle(x, y, d);
         app.stage.addChild(ui);
       }
-      // ui.visible = false;
 
       let uiy = new PIXI.Graphics();
 
@@ -136,7 +134,6 @@ function App() {
         uiy.drawCircle(x, y, radius);
         app.stage.addChild(uiy);
       }
-      // uiy.visible = false;
       const displayText = new PIXI.Text("", {
         fontFamily: "Times New Roman",
         fontSize: 50,
@@ -161,7 +158,6 @@ function App() {
       function startTimer() {
         clearInterval(intervalId2);
 
-        // start the timer after 6 seconds
         const timerId = setTimeout(() => {
           intervalId = setInterval(() => {
             value += 0.01;
@@ -179,14 +175,12 @@ function App() {
                 delay: 2,
                 duration: 0.1,
                 onComplete: () => {
-                  // Remove the text from the stage after it disappears
                   app.stage.removeChild(txt2);
                 },
               });
               gsap.delayedCall(1.5, () => {
                 // Remove the image after 3 seconds
                 gsap.to(image, { alpha: 1, onComplete: () => {
-                  // Remove the image from the stage after it disappears
                   app.stage.removeChild(image);
                 }});
               });
@@ -195,13 +189,11 @@ function App() {
               });
             }
 
-            // Update the timer value on the server
             timerValue += 1;
             socket.emit("timerValue", timerValue); // send the updated timer value to the server
           }, 100);
         });
 
-        // Update the client timer with the server's timer value
         socket.on("timerValue", (newValue) => {
           value = newValue / 100 + 1;
           displayText.text = value.toFixed(2) + "x";
@@ -234,7 +226,7 @@ function App() {
       let xVel = 1.7;
       let angle = 0;
       let amplitude = 85;
-      let frequency = 0.008;
+      let frequency = 0.007;
       let curve = new PIXI.Graphics();
       curve.lineStyle(2, 0x0e0e0e);
       curve.moveTo(0, 0);
@@ -264,10 +256,10 @@ function App() {
         // socket.emit("update8", xVel);
 
         if (value < randomNumber) {
-          if (image.x < 700) {
+          if (image.x < 800) {
             // console.log("true",xVel)
           } else {
-            image.x = 700;
+            image.x = 800;
           }
           image.y = 195 + Math.cos(angle) * amplitude;
         }
@@ -354,8 +346,6 @@ function App() {
         app.stage.addChild(rect);
         app.stage.addChild(circle);
         countdownTimer();
-        // image.x = 25;
-        // image.y = 280;
       }
     }
 
@@ -367,11 +357,11 @@ function App() {
       stroke: 0x00ced1, // Specify the color of the stroke
       strokeThickness: 5,
     });
-    loadingtext.position.set(250, 215);
+    loadingtext.position.set(285, 215);
 
     app.stage.addChild(loadingtext);
 
-    let loadingvalue = 15;
+    let loadingvalue = 16;
     let intervalId2;
     let timerValue = 0;
 
@@ -386,7 +376,9 @@ function App() {
       // start the timer after 6 seconds
       const timerId2 = setTimeout(() => {
         intervalId2 = setInterval(() => {
-          loadingvalue -= 0.01;
+          loadingvalue -= 0.1;
+          console.log(loadingvalue);
+
           loadingtext.text = "STARTING IN " + loadingvalue.toFixed(0);
           if (loadingvalue <= 1) {
             loadingtext.visible = false;
@@ -399,8 +391,9 @@ function App() {
             app.stage.removeChild(loadingText);
             app.stage.removeChild(rect);
             app.stage.removeChild(circle);
-            xline.visible = true;
-            yline.visible = true;
+          }
+          if(loadingvalue === 0 || loadingText === -1){
+            loadingText.visible = false
           }
 
           // Update the timer value on the server
@@ -409,7 +402,6 @@ function App() {
         }, 1000);
       });
 
-      // Update the client timer with the server's timer value
       socket.on("load", (newValue) => {
         loadingvalue = newValue / 100;
         loadingtext.text = "STARTING IN " + loadingvalue.toFixed(0);
@@ -446,4 +438,3 @@ socket.on("connect", () => {
 socket.on("disconnect", () => {
   console.log("Disconnected from server");
 });
-
