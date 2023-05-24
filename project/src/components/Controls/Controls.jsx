@@ -13,6 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  doc,
   collection,
   addDoc,
   query,
@@ -20,7 +21,6 @@ import {
   getDocs,
   updateDoc,
   serverTimestamp,
-  orderBy
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { auth } from "../../firebase";
@@ -53,11 +53,19 @@ const Controls = (props) => {
 
   let randomNumber;
 
+
   function resetgame() {
     gsap.delayedCall(3, () => {
+      if (flipped) {
+        setFlipped(false);
+      }
+      if (fliped) {
+        setFliped(false);
+      }
       countdownTimer();
     });
   }
+  
 
   socket.on("randomNumber", (data) => {
     randomNumber = data;
@@ -172,7 +180,7 @@ const Controls = (props) => {
   }, []);
 
   const handleClick = () => {
-    if ((count <= 1 && flipped) || (count > 1 && !flipped)) {
+    if ((count <= 1 && flipped) || (count > 1 && !flipped ) || (count >= randomNumber && flipped)) {
       return;
     }
 
@@ -245,66 +253,37 @@ const Controls = (props) => {
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
+  
   //   const postData = {
   //     username,
   //     amount,
   //     cash,
-  //     randomNumber
+  //     // randomNumber
   //   };
+  
   //   console.log(postData);
   
   //   try {
-  //     const postsRef = collection(db, "users");
-  //     const q = query(postsRef, where("username", "==", username));
-  //     const querySnapshot = await getDocs(q);
-  
-  //     if (querySnapshot.docs.length > 0) {
-  //       const existingData = querySnapshot.docs[0];
-  //       await updateDoc(existingData.ref, {
-  //         cash,
-  //       });
-  //       console.log("Data updated successfully");
-  //     } else {
-  //       await addDoc(postsRef, {
-  //         ...postData,
-  //         timestamp: serverTimestamp(),
-  //       });
-  //       console.log("Data saved successfully");
-  //     }
-  
-  //     // Update the state locally with the new data
-  //     if (!dataUpdated) {
-  //       setData([...data, { ...postData, timestamp: serverTimestamp() }]);
-  //       setDataUpdated(true);
-  //     }
-  //   } catch (err) {
-  //     console.log(err.message);
-  //   }
-  // }
-
+  //     const postsRef = collection(db, "posts");
     
-  
-  // const handleSubmit2 = async (e) => {
-  //   e.preventDefault();
-  //   const postData = {
-  //     username,
-  //     cash2,
-  //     amount2
-  //   };
-  //   console.log(postData);
-  
-  //   try {
-  //     const postsRef = collection(db, "users");
-  //     const q = query(postsRef, where("username", "==", username));
-  //     const querySnapshot = await getDocs(q);
-  
-  //     if (querySnapshot.docs.length > 0) {
-  //       const existingData = querySnapshot.docs[0];
-  //       await updateDoc(existingData.ref, {
-  //         cash2,
-  //         amount2
-  //       });
-  //       console.log("Data updated successfully");
+  //     // Check if postData.id is defined and valid
+  //     if (postData.id) {
+  //       const q = query(postsRef, where("id", "==", postData.id));
+  //       const querySnapshot = await getDocs(q);
+    
+  //       if (querySnapshot.docs.length > 0) {
+  //         const existingData = querySnapshot.docs[0];
+  //         await updateDoc(existingData.ref, {
+  //           cash,
+  //         });
+  //         console.log("Data updated successfully");
+  //       } else {
+  //         await addDoc(postsRef, {
+  //           ...postData,
+  //           timestamp: serverTimestamp(),
+  //         });
+  //         console.log("Data saved successfully");
+  //       }
   //     } else {
   //       await addDoc(postsRef, {
   //         ...postData,
@@ -312,7 +291,7 @@ const Controls = (props) => {
   //       });
   //       console.log("Data saved successfully");
   //     }
-  
+    
   //     // Update the state locally with the new data
   //     if (!dataUpdated) {
   //       setData([...data, { ...postData, timestamp: serverTimestamp() }]);
@@ -321,53 +300,86 @@ const Controls = (props) => {
   //   } catch (err) {
   //     console.log(err.message);
   //   }
+    
   // }
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const data = { username, amount, amount2, cash, cash2 };
+  
+    try {
+      const postsRef = collection(db, "posts");
+      const q = query(
+        postsRef,
+        where("username", "==", username)
+      );
+      const querySnapshot = await getDocs(q);
+  
+      if (querySnapshot.docs.length > 0) {
+        const existingData = querySnapshot.docs[0];
+        const docRef = doc(db, "posts", existingData.id);
+        await updateDoc(docRef, {
+          cash,
+          // cash2,
+          amount,
+          amount2
+        });
+        console.log("Data updated successfully");
+      } else {
+        await addDoc(postsRef, {
+          ...data,
+          timestamp: serverTimestamp(),
+        });
+        console.log("Data saved successfully");
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+  
+  
+  const handleSubmit2 = async (e) => {
+    e.preventDefault();
     const postData = {
       username,
-      amount,
-      cash,
-      amount2,
       cash2,
-      // result,
-      // prize,
+      amount2
     };
     console.log(postData);
-
+  
     try {
       const postsRef = collection(db, "posts");
       const q = query(postsRef, where("username", "==", username));
       const querySnapshot = await getDocs(q);
-
+  
       if (querySnapshot.docs.length > 0) {
         const existingData = querySnapshot.docs[0];
         await updateDoc(existingData.ref, {
-          cash,
           cash2,
-          amount2,
-          // prize,
-          // result,
+          amount2
         });
         console.log("Data updated successfully");
-
-        // Update the state locally with the new data
-        setData([...data, postData]);
       } else {
         await addDoc(postsRef, {
           ...postData,
           timestamp: serverTimestamp(),
         });
         console.log("Data saved successfully");
-
-        // Update the state locally with the new data
+      }
+  
+      // Update the state locally with the new data
+      if (!dataUpdated) {
         setData([...data, { ...postData, timestamp: serverTimestamp() }]);
+        setDataUpdated(true);
       }
     } catch (err) {
       console.log(err.message);
     }
   };
+  
+
+
   
   
 
@@ -529,7 +541,7 @@ const Controls = (props) => {
                   </div>
                 </div>
               </div>
-             <form onClick={handleSubmit}>
+             <form onClick={handleSubmit2}>
               <div className="betx">
                 <button
                   style={{ borderRadius: "15px" }}
